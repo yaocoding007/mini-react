@@ -1,4 +1,5 @@
 import { createDom } from './createElement'
+import { commitRoot } from './render'
 
 function workLoop(deadline) {
     let shouldYield = false;
@@ -6,8 +7,8 @@ function workLoop(deadline) {
       window.nextUnitOfWork = performUnitOfWork(window.nextUnitOfWork);
       shouldYield = deadline.timeRemaining() < 1;
     }
-    if (!window.nextUnitOfWork && !shouldYield) {
-      requestIdleCallback(workLoop);
+    if (!window.nextUnitOfWork && window.wipRoot) {
+      commitRoot();
     }
 }
 
