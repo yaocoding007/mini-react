@@ -1,5 +1,11 @@
 import mReact from './mReact';
 
+import { workLoop } from './mReact/concurrent'
+
+window.nextUnitOfWork = null;
+
+requestIdleCallback(workLoop)
+
 /** @jsx mReact.createElement */
 const element = (
   <div>
